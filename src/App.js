@@ -7,6 +7,12 @@ const App = () => {
 	const [message, setMessage] = useState(null)
 	const [ previousChats, setPreviousChats ] = useState([])
 	const [currentTitle, setCurrentTitle] = useState(null)
+	const createNewChat = () => {
+		setMessage(null)
+		setValue('')
+		setCurrentTitle(null)
+	}
+
 
 	const getMessages = async () => {
 		const options = {
@@ -21,6 +27,7 @@ const App = () => {
 		try{
 			const response = await fetch('http://localhost:8000/completions', options)
 			const data = await response.json()
+			console.log('Data:', data)
 			setMessage({...data.choices[0].message,title: value});
 		}catch (err){
 			console.log(err)
@@ -45,7 +52,7 @@ const App = () => {
 	return (
 		<div className="app">
 		<section className="side-bar">
-			<button>+ New chat</button>
+			<button onClick={createNewChat}>+ New chat</button>
 			<ul className = "history">
 				<li>Chat 1</li>
 
